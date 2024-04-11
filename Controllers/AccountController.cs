@@ -97,6 +97,7 @@ namespace ProcessoManyminds_Back.Controllers
                 {
                     UserName = user.Name
                 };
+
                 identityUser.PasswordHash = _userManager.PasswordHasher.HashPassword(identityUser, user.Password);
                 var result = await _userManager.CreateAsync(identityUser);
                 if (result.Succeeded)

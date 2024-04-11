@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProcessoManyminds_Back.Models;
 using System.Reflection.Emit;
 
 namespace ProcessoManyminds_Back.Context
@@ -13,6 +14,7 @@ namespace ProcessoManyminds_Back.Context
         public DbSet<IdentityRole> Roles { get; set; }
         public DbSet<IdentityUserClaim<string>> UserClaims { get; set; }
         public DbSet<IdentityUserRole<string>> UserRoles { get; set; }
+        public DbSet<Produtos> Produtos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

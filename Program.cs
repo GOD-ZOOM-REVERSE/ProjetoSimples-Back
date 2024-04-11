@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ProcessoManyminds_Back.Business;
+using ProcessoManyminds_Back.Business.Interfaces;
 using ProcessoManyminds_Back.Context;
+using ProcessoManyminds_Back.Datas.Repository;
+using ProcessoManyminds_Back.Datas.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +48,10 @@ services.AddAuthentication(options =>
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
     options.SlidingExpiration = true;
 });
+
+services.AddScoped<IProdutosBusiness, ProdutosBusiness>();
+
+services.AddScoped<IProdutosRepository, ProdutosRepository>();
 
 services.AddAuthorization();
 
