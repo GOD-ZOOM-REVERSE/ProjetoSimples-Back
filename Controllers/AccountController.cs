@@ -51,11 +51,15 @@ namespace ProcessoManyminds_Back.Controllers
 
                 var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(userIdentity);
 
-                var isPasswordValid = await _userManager.CheckPasswordAsync(userIdentity, user.Password);
+                if (lockoutEndDate is not null && lockoutEndDate > DateTimeOffset.UtcNow) throw new ArgumentException("Conta bloqueada temporariamente!");
 
-                if (lockoutEndDate is not null && lockoutEndDate > DateTimeOffset.UtcNow) return BadRequest("Conta bloqueada temporariamente!");
+                var isPasswordValid = await _signInManager.CheckPasswordSignInAsync(userIdentity, user.Password, true);
 
-                if (isPasswordValid)
+                lockoutEndDate = await _userManager.GetLockoutEndDateAsync(userIdentity);
+
+                if (lockoutEndDate is not null && lockoutEndDate > DateTimeOffset.UtcNow) throw new ArgumentException("Conta bloqueada temporariamente!");
+
+                if (isPasswordValid.Succeeded)
                 {
                     var claims = new List<Claim>()
                     {
@@ -81,7 +85,7 @@ namespace ProcessoManyminds_Back.Controllers
                 }
             } catch (ArgumentException ex)
             {
-                return Unauthorized(new { message = ex.Message });
+                return BadRequest(new { message = ex.Message });
             }
         }
         [HttpPost("Register")]
@@ -103,13 +107,20 @@ namespace ProcessoManyminds_Back.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.SetLockoutEnabledAsync(identityUser, false);
-                    return RedirectToPage("/Login");
+                    return Ok();
                 }
 
             } catch(ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
+            return Ok();
+        }
+
+        [HttpPost("Deslogar")]
+        public async Task<IActionResult> Deslogar()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Ok();
         }
     }
