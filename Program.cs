@@ -50,8 +50,10 @@ services.AddAuthentication(options =>
 });
 
 services.AddScoped<IProdutosBusiness, ProdutosBusiness>();
+services.AddScoped<IPedidosComprasBusiness, PedidosComprasBusiness>();
 
 services.AddScoped<IProdutosRepository, ProdutosRepository>();
+services.AddScoped<IPedidosComprasRepository, PedidosComprasRepository>();
 
 services.AddAuthorization();
 

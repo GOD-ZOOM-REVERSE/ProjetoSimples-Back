@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProcessoManyminds_Back.Context;
 
@@ -11,9 +12,11 @@ using ProcessoManyminds_Back.Context;
 namespace ProcessoManymindsBack.Migrations
 {
     [DbContext(typeof(ManymindsContext))]
-    partial class ManymindsContextModelSnapshot : ModelSnapshot
+    [Migration("20240412000930_removeColumn_ValorUnitario_ProdutoPedido")]
+    partial class removeColumn_ValorUnitario_ProdutoPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,14 +136,8 @@ namespace ProcessoManymindsBack.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<double>("ValorTotal")
                         .HasColumnType("float");
