@@ -13,6 +13,7 @@ namespace ProcessoManyminds_Back.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         public string Fornecedor { get; set; } = "Pernambuquine";
+        public string Observacao { get; set; }
         public enum StatusPedido
         {
             Finalizado = 0,
